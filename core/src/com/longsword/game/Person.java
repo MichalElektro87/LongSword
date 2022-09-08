@@ -5,17 +5,21 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.utils.Array;
 
 public class Person extends Actor {
 
     private String name = "";
     private ObjectType objectType;
-    private Animation <TextureRegion> animation;
+    private Array<Animation<TextureRegion>> animation;
+    private int currentAnimation = 0;
     private int health = 100;
     private int damage = 10;
     private float elapsedTime = 0f;
+    private boolean directionLeft = true;
+    private boolean attackBlock = false;
 
-    public Person(String name, ObjectType objectType, Animation <TextureRegion> animation, int health, int damage) {
+    public Person(String name, ObjectType objectType, Array<Animation <TextureRegion>> animation, int health, int damage) {
         this.name = name;
         this.objectType = objectType;
         this.animation = animation;
@@ -59,6 +63,42 @@ public class Person extends Actor {
         this.damage = damage;
     }
 
+    public int getCurrentAnimation() {
+        return currentAnimation;
+    }
+
+    public void setCurrentAnimation(int currentAnimation) {
+        this.currentAnimation = currentAnimation;
+    }
+
+    public Array<Animation<TextureRegion>> getAnimation() {
+        return animation;
+    }
+
+    public boolean isDirectionLeft() {
+        return directionLeft;
+    }
+
+    public void setDirectionLeft(boolean directionLeft) {
+        this.directionLeft = directionLeft;
+    }
+
+    public void setElapsedTime(float elapsedTime) {
+        this.elapsedTime = elapsedTime;
+    }
+
+    public float getElapsedTime() {
+        return elapsedTime;
+    }
+
+    public boolean isAttackBlock() {
+        return attackBlock;
+    }
+
+    public void setAttackBlock(boolean attackBlock) {
+        this.attackBlock = attackBlock;
+    }
+
     @Override
     public void act(float delta) {
         super.act(delta);
@@ -70,7 +110,7 @@ public class Person extends Actor {
         super.draw(batch, parentAlpha);
 
         if (isVisible()) {
-            batch.draw(animation.getKeyFrame(elapsedTime, true), getX(), getY(), getOriginX(), getOriginY(), animation.getKeyFrame(elapsedTime).getRegionWidth(), animation.getKeyFrame(elapsedTime).getRegionHeight(),getScaleX(),getScaleY(),getRotation());
+            batch.draw(animation.get(currentAnimation).getKeyFrame(elapsedTime, true), getX(), getY(), getOriginX(), getOriginY(), animation.get(currentAnimation).getKeyFrame(elapsedTime).getRegionWidth(), animation.get(currentAnimation).getKeyFrame(elapsedTime).getRegionHeight(),getScaleX(),getScaleY(),getRotation());
         }
     }
 }
