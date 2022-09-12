@@ -7,6 +7,10 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
 public class Person extends Actor {
 
     private String name = "";
