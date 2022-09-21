@@ -7,7 +7,7 @@ public class LongSword extends Game {
 	
 	@Override
 	public void create () {
-		setScreen(new GameScreen(this));
+		this.setScreen(new GameScreen(this));
 	}
 
 	@Override
