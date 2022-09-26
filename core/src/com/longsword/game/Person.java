@@ -1,6 +1,7 @@
 package com.longsword.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -36,6 +37,11 @@ public class Person extends Actor {
         this.damage = damage;
         isAnimSet = true;
         collisionRectangle = new Rectangle();
+        collisionRectangle.width = animation.get(0).getKeyFrame(0).getRegionWidth();
+        collisionRectangle.height = animation.get(0).getKeyFrame(0).getRegionHeight();
+        setSize(collisionRectangle.getWidth(), collisionRectangle.getHeight());
+        setOrigin(getWidth() / 2,getHeight() / 2);
+
     }
 
     public Person(String name, ObjectType objectType, TextureRegion region, int health, int damage) {
@@ -48,6 +54,11 @@ public class Person extends Actor {
         setSize(region.getRegionWidth(),region.getRegionHeight());
         setOrigin(getWidth()/2,getHeight()/2);
         collisionRectangle = new Rectangle(getX(),getY(),getWidth(),getHeight());
+    }
+
+    public Person(String name, ObjectType objectType) {
+        this.name = name;
+        this.objectType = objectType;
     }
 
     @Override
@@ -163,6 +174,11 @@ public class Person extends Actor {
         super.draw(batch, parentAlpha);
 
         collisionRectangle.setPosition(getX(),getY());
+        collisionRectangle.width = collisionRectangle.width * getScaleX();
+        collisionRectangle.height = collisionRectangle.height * getScaleY();
+
+        Color c = getColor();
+        batch.setColor(c.r,c.g,c.b,c.a);
 
         if (isVisible()) {
             if (isAnimSet) {

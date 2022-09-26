@@ -5,12 +5,10 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Array;
-
-import java.awt.*;
-
 
 public class Player extends Person {
 
@@ -29,6 +27,13 @@ public class Player extends Person {
     @Override
     public void act(float delta) {
         super.act(delta);
+
+        if (getX() + getWidth() / 2 < 0)
+            moveBy(4f,0f);
+
+        if (getX() > 800 - getWidth() / 2)
+            moveBy(-4f, 0f);
+
 
         calculateSwordCollisionRectanglePosition();
 
@@ -58,8 +63,8 @@ public class Player extends Person {
 
             if (Gdx.input.isKeyJustPressed(Input.Keys.L)) {
                 if (!hasActions()) {
-                    addAction(Actions.sequence(Actions.moveBy(0f, 100f, 0.5f),
-                            Actions.moveBy(0f, -100f, 0.5f)));
+                    addAction(Actions.sequence(Actions.moveBy(0f, 100f, 0.5f, Interpolation.fastSlow),
+                            Actions.moveBy(0f, -100f, 0.5f, Interpolation.slowFast)));
                 }
             }
 
